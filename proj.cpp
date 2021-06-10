@@ -41,11 +41,11 @@ int main () {
 	
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	
 #ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
 	int width = 800, height = 600;
@@ -53,86 +53,86 @@ int main () {
 	
 	if(w == NULL){
 		std::cout << "Couldn't make a window!" << std::endl;
-        glfwTerminate();
-        return -1;
+		glfwTerminate();
+		return -1;
 	}
 	
 	glfwMakeContextCurrent(w);
-    glfwSetFramebufferSizeCallback(w, framebuffer_size_callback);
+	glfwSetFramebufferSizeCallback(w, framebuffer_size_callback);
 	glfwSetCursorPosCallback(w, mouse_callback);
-    glfwSetScrollCallback(w, scroll_callback);
+	glfwSetScrollCallback(w, scroll_callback);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwSetKeyCallback(w, key_callback);
 	
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Loading GLAD failed!" << std::endl;
-        return -1;
-    }
+		std::cout << "Loading GLAD failed!" << std::endl;
+		return -1;
+	}
 	
 	float podloga_cvorovi[] = {
-         0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f, 1.0f, 0.0f, // top right
-         0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,  0.0f, 1.0f, 0.0f, 1.0f, 0.0f  // top left 
-    };
-    unsigned int podloga_ind[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
+		 0.5f,	0.5f, 0.0f,	 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, // top right
+		 0.5f, -0.5f, 0.0f,	 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom right
+		-0.5f, -0.5f, 0.0f,	 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
+		-0.5f,	0.5f, 0.0f,	 0.0f, 1.0f, 0.0f, 1.0f, 0.0f  // top left 
+	};
+	unsigned int podloga_ind[] = {
+		0, 1, 3, // first triangle
+		1, 2, 3	 // second triangle
+	};
 	
 	float cvorovi[] = {
-		// positions           // texture coords
+		// positions		   // texture coords
 		-0.5f, -0.5f, -0.5f,   0.0f,  0.0f,
-         0.5f, -0.5f, -0.5f,   1.0f,  0.0f,
-         0.5f,  0.5f, -0.5f,    1.0f,  1.0f,
-         0.5f,  0.5f, -0.5f,    1.0f,  1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,
-        -0.5f, -0.5f, -0.5f,   0.0f,  0.0f,
+		0.5f, -0.5f, -0.5f,   1.0f,  0.0f,
+		0.5f,	0.5f, -0.5f,	1.0f,  1.0f,
+		0.5f,	0.5f, -0.5f,	1.0f,  1.0f,
+		-0.5f,	0.5f, -0.5f,  0.0f,	 1.0f,
+		-0.5f, -0.5f, -0.5f,   0.0f,  0.0f,
 
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
-         0.5f, -0.5f,  0.5f,    1.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f,  1.0f,
-         0.5f,  0.5f,  0.5f,    1.0f,  1.0f,
-        -0.5f,  0.5f,  0.5f,   0.0f,  1.0f,
-        -0.5f, -0.5f,  0.5f,    0.0f,  0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,	 0.0f,
+		0.5f, -0.5f,  0.5f,	1.0f,  0.0f,
+		0.5f,	0.5f,  0.5f,  1.0f,	 1.0f,
+		0.5f,	0.5f,  0.5f,	1.0f,  1.0f,
+		-0.5f,	0.5f,  0.5f,   0.0f,  1.0f,
+		-0.5f, -0.5f,  0.5f,	0.0f,  0.0f,
 
-        -0.5f,  0.5f,  0.5f,   1.0f,  0.0f,
-        -0.5f,  0.5f, -0.5f,   1.0f,  1.0f,
-        -0.5f, -0.5f, -0.5f,   0.0f,  1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f, 1.0f,  0.0f,
+		-0.5f,	0.5f,  0.5f,   1.0f,  0.0f,
+		-0.5f,	0.5f, -0.5f,   1.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,   0.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,	 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,	 0.0f,
+		-0.5f,	0.5f,  0.5f, 1.0f,	0.0f,
 
-         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
-         0.5f,  0.5f, -0.5f,    1.0f,  1.0f,
-         0.5f, -0.5f, -0.5f,    0.0f,  1.0f,
-         0.5f, -0.5f, -0.5f,   0.0f,  1.0f,
-         0.5f, -0.5f,  0.5f,   0.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,   1.0f,  0.0f,
+		0.5f,	0.5f,  0.5f,  1.0f,	 0.0f,
+		0.5f,	0.5f, -0.5f,	1.0f,  1.0f,
+		0.5f, -0.5f, -0.5f,	0.0f,  1.0f,
+		0.5f, -0.5f, -0.5f,   0.0f,  1.0f,
+		0.5f, -0.5f,  0.5f,   0.0f,  0.0f,
+		0.5f,	0.5f,  0.5f,   1.0f,  0.0f,
 
-        -0.5f, -0.5f, -0.5f,0.0f,  1.0f,
-         0.5f, -0.5f, -0.5f,  1.0f,  1.0f,
-         0.5f, -0.5f,  0.5f,1.0f,  0.0f,
-         0.5f, -0.5f,  0.5f, 1.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f,  1.0f,
+		-0.5f, -0.5f, -0.5f,0.0f,  1.0f,
+		0.5f, -0.5f, -0.5f,  1.0f,	 1.0f,
+		0.5f, -0.5f,  0.5f,1.0f,  0.0f,
+		0.5f, -0.5f,  0.5f, 1.0f,	0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,	 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,	 1.0f,
 
-        -0.5f,  0.5f, -0.5f,    0.0f,  1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f,  1.0f,
-         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f,  0.0f,
-        -0.5f,  0.5f, -0.5f,   0.0f,  1.0f
+		-0.5f,	0.5f, -0.5f,	0.0f,  1.0f,
+		0.5f,	0.5f, -0.5f,  1.0f,	 1.0f,
+		0.5f,	0.5f,  0.5f,  1.0f,	 0.0f,
+		0.5f,	0.5f,  0.5f,  1.0f,	 0.0f,
+		-0.5f,	0.5f,  0.5f, 0.0f,	0.0f,
+		-0.5f,	0.5f, -0.5f,   0.0f,  1.0f
 	};
 	
 	// float tet [] = {
-		// -0.28868, 0.28868, -0.28868,  0.57735, 0.57735, -0.57735,
-		// 0.28868, -0.28868, -0.28868,  0.57735, 0.57735, -0.57735,
-		// 0.28868, 0.28868, 0.28868,   0.57735, 0.57735, -0.57735,
+		// -0.28868, 0.28868, -0.28868,	 0.57735, 0.57735, -0.57735,
+		// 0.28868, -0.28868, -0.28868,	 0.57735, 0.57735, -0.57735,
+		// 0.28868, 0.28868, 0.28868,	0.57735, 0.57735, -0.57735,
 		
 		// 0.28868, 0.28868, 0.28868, -0.57735, 0.57735, 0.57735,
 		// -0.28868, -0.28868, 0.28868, -0.57735, 0.57735, 0.57735,
-		// -0.28868, 0.28868, -0.28868,  -0.57735, 0.57735, 0.57735,
+		// -0.28868, 0.28868, -0.28868,	 -0.57735, 0.57735, 0.57735,
 		
 		// -0.28868, 0.28868, -0.28868, -0.57735, -0.57735, -0.57735,
 		// -0.28868, -0.28868, 0.28868, -0.57735, -0.57735, -0.57735,
@@ -147,11 +147,11 @@ int main () {
 	// float tet [] = {
 		// -0.28868, 0.28868, -0.28868, -0.57735, -0.57735, 0.57735,
 		// 0.28868, -0.28868, -0.28868, -0.57735, -0.57735, 0.57735,
-		// 0.28868, 0.28868, 0.28868,   -0.57735, -0.57735, 0.57735,
+		// 0.28868, 0.28868, 0.28868,	-0.57735, -0.57735, 0.57735,
 		
 		// 0.28868, 0.28868, 0.28868, -0.57735, 0.57735, 0.57735,
 		// -0.28868, -0.28868, 0.28868, -0.57735, 0.57735, 0.57735,
-		// -0.28868, 0.28868, -0.28868,  -0.57735, 0.57735, 0.57735,
+		// -0.28868, 0.28868, -0.28868,	 -0.57735, 0.57735, 0.57735,
 		
 		// -0.28868, 0.28868, -0.28868, 0.57735, 0.57735, 0.57735,
 		// -0.28868, -0.28868, 0.28868, 0.57735, 0.57735, 0.57735,
@@ -198,9 +198,9 @@ int main () {
 	};
 	
 	float tet_4_cv [] = {
-		0.28868, 0.28868, 0.28868, 		  	//svi poz
-		-0.28868, 0.28868, -0.28868,	    //neg poz neg
-		0.28868, -0.28868, -0.28868, 		//poz neg neg
+		0.28868, 0.28868, 0.28868,			//svi poz
+		-0.28868, 0.28868, -0.28868,		//neg poz neg
+		0.28868, -0.28868, -0.28868,		//poz neg neg
 		-0.28868, -0.28868, 0.28868			//neg neg poz
 	};
 	float tet_4_norm [] = {
@@ -226,7 +226,7 @@ int main () {
 
 	unsigned int indexi[] = {
 		 0, 1, 3, 
-        1, 2, 3  
+		1, 2, 3	 
 	};
 	
 	//kocka
@@ -276,23 +276,23 @@ int main () {
 	unsigned int VAO_pod, VBO_pod, EBO_pod;
 	
 	glGenVertexArrays(1, &VAO_pod);
-    glGenBuffers(1, &VBO_pod);
-    glGenBuffers(1, &EBO_pod);
+	glGenBuffers(1, &VBO_pod);
+	glGenBuffers(1, &EBO_pod);
 
-    glBindVertexArray(VAO_pod);
+	glBindVertexArray(VAO_pod);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, VBO_pod);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(podloga_cvorovi), podloga_cvorovi, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(podloga_cvorovi), podloga_cvorovi, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_pod);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(podloga_ind), podloga_ind, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_pod);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(podloga_ind), podloga_ind, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
-    glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(2);
 	
 	glEnable(GL_DEPTH_TEST);  
 	
@@ -306,20 +306,20 @@ int main () {
 		process_input(w);
 		
 		float currentFrame = glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 
 		glClearColor(0.2f, 0.4f, 0.35f, 0.35f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), 
 		(float)width / (float)height, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();		
+		glm::mat4 view = camera.GetViewMatrix();		
 		glm::mat4 model = glm::mat4(1.0f);
 		
 		model_shader.use();
-        model_shader.setMat4("projection", projection);
-        model_shader.setMat4("view", view);
+		model_shader.setMat4("projection", projection);
+		model_shader.setMat4("view", view);
 		
 		model_shader.setBool("lampa", lampa);
 		
@@ -327,35 +327,35 @@ int main () {
 		model_shader.setVec3("pointLight.position", lightPos);
 		model_shader.setVec3("viewPosition", camera.Position); 
 		model_shader.setFloat("pointLight.constant",  1.0f);
-		model_shader.setFloat("pointLight.linear",    0.09f);
-		model_shader.setFloat("pointLight.quadratic", 0.032f);	    
+		model_shader.setFloat("pointLight.linear",	  0.09f);
+		model_shader.setFloat("pointLight.quadratic", 0.032f);		
 		model_shader.setVec3("pointLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        model_shader.setVec3("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        model_shader.setVec3("pointLight.specular", 1.0f, 1.0f, 1.0f);
+		model_shader.setVec3("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		model_shader.setVec3("pointLight.specular", 1.0f, 1.0f, 1.0f);
 		
 		//model dirlight
 		model_shader.setVec3("dirL.direction", glm::vec3(5.0f, 5.0f, 5.0f));
 		model_shader.setVec3("dirL.ambient", glm::vec3(0.35f, 0.2f, 0.2f));
-        model_shader.setVec3("dirL.diffuse", glm::vec3(0.1f, 0.1f, 0.3f));
-        model_shader.setVec3("dirL.specular", 1.0f, 1.0f, 1.0f);
+		model_shader.setVec3("dirL.diffuse", glm::vec3(0.1f, 0.1f, 0.3f));
+		model_shader.setVec3("dirL.specular", 1.0f, 1.0f, 1.0f);
 		
 		//model spotlight
 		model_shader.setVec3("spotLight.position", 
 		glm::vec3(sijalica_pos.x, sijalica_pos.y + 0.5, sijalica_pos.z));
-        model_shader.setVec3("spotLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-        model_shader.setVec3("spotLight.ambient", 0.4f, 0.3f, 0.5f);
-        model_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-        model_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-        model_shader.setFloat("spotLight.constant", 1.0f);
-        model_shader.setFloat("spotLight.linear", 0.09);
-        model_shader.setFloat("spotLight.quadratic", 0.032);
-        model_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(15.5f)));
-        model_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(23.5f)));     
+		model_shader.setVec3("spotLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+		model_shader.setVec3("spotLight.ambient", 0.4f, 0.3f, 0.5f);
+		model_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+		model_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+		model_shader.setFloat("spotLight.constant", 1.0f);
+		model_shader.setFloat("spotLight.linear", 0.09);
+		model_shader.setFloat("spotLight.quadratic", 0.032);
+		model_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(15.5f)));
+		model_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(23.5f)));	   
 		
 		//sto
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 3.0f));
-        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
-        model_shader.setMat4("model", model);
+		model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
+		model_shader.setMat4("model", model);
 		
 		table.Draw(model_shader);
 		
@@ -376,35 +376,35 @@ int main () {
 		obj_shader.setVec3("light.position", lightPos);
 		obj_shader.setVec3("viewPos", camera.Position); 
 		obj_shader.setFloat("light.constant",  1.0f);
-		obj_shader.setFloat("light.linear",    0.09f);
-		obj_shader.setFloat("light.quadratic", 0.032f);	    
+		obj_shader.setFloat("light.linear",	   0.09f);
+		obj_shader.setFloat("light.quadratic", 0.032f);		
 		obj_shader.setVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        obj_shader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        obj_shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+		obj_shader.setVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		obj_shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
 		//material
 		obj_shader.setVec3("mat.ambient", 1.0f, 0.5f, 0.31f);
-        obj_shader.setVec3("mat.diffuse", 1.0f, 0.5f, 0.31f);
-        obj_shader.setVec3("mat.specular", 0.4f, 0.3f, 0.5f); 
-        obj_shader.setFloat("mat.shininess", 32.0f);
+		obj_shader.setVec3("mat.diffuse", 1.0f, 0.5f, 0.31f);
+		obj_shader.setVec3("mat.specular", 0.4f, 0.3f, 0.5f); 
+		obj_shader.setFloat("mat.shininess", 32.0f);
 		
 		//spotlight
 		obj_shader.setVec3("spotLight.position", sijalica_pos);
-        obj_shader.setVec3("spotLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-        obj_shader.setVec3("spotLight.ambient", 0.4f, 0.3f, 0.5f);
-        obj_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-        obj_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-        obj_shader.setFloat("spotLight.constant", 1.0f);
-        obj_shader.setFloat("spotLight.linear", 0.09);
-        obj_shader.setFloat("spotLight.quadratic", 0.032);
-        obj_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-        obj_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));     
-       
+		obj_shader.setVec3("spotLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+		obj_shader.setVec3("spotLight.ambient", 0.4f, 0.3f, 0.5f);
+		obj_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+		obj_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+		obj_shader.setFloat("spotLight.constant", 1.0f);
+		obj_shader.setFloat("spotLight.linear", 0.09);
+		obj_shader.setFloat("spotLight.quadratic", 0.032);
+		obj_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+		obj_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));	 
+	   
 		//dirlight
 		obj_shader.setVec3("dirL.direction", glm::vec3(5.0f, 5.0f, 5.0f));
 		obj_shader.setVec3("dirL.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        obj_shader.setVec3("dirL.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        obj_shader.setVec3("dirL.specular", 1.0f, 1.0f, 1.0f);
+		obj_shader.setVec3("dirL.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		obj_shader.setVec3("dirL.specular", 1.0f, 1.0f, 1.0f);
 		
 		//tet1
 		model = glm::mat4(1.0f);
@@ -430,13 +430,13 @@ int main () {
 		obj_shader.setMat4("view", view);
 		
 		obj_shader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-        obj_shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		obj_shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 		obj_shader.setVec3("viewPos", camera.Position); 
 	
 		obj_shader.setVec3("mat.ambient", 0.0215, 0.1745, 0.0215);
-        obj_shader.setVec3("mat.diffuse", 0.07568, 0.61424, 0.07568);
-        obj_shader.setVec3("mat.specular", 0.633, 0.727811, 0.633); 
-        obj_shader.setFloat("mat.shininess", 0.6 * 128.0);		
+		obj_shader.setVec3("mat.diffuse", 0.07568, 0.61424, 0.07568);
+		obj_shader.setVec3("mat.specular", 0.633, 0.727811, 0.633); 
+		obj_shader.setFloat("mat.shininess", 0.6 * 128.0);		
 		
 		glBindVertexArray(VAO_tet);
 		glDrawArrays(GL_TRIANGLES, 0, 12);
@@ -486,31 +486,31 @@ int main () {
 		
 		podloga_shader.setVec3("pointLight.position", lightPos);
 		podloga_shader.setVec3("viewPosition", camera.Position); 
-		podloga_shader.setFloat("pointLight.constant",  1.0f);
-		podloga_shader.setFloat("pointLight.linear",    0.09f);
-		podloga_shader.setFloat("pointLight.quadratic", 0.032f);	    
+		podloga_shader.setFloat("pointLight.constant",	1.0f);
+		podloga_shader.setFloat("pointLight.linear",	0.09f);
+		podloga_shader.setFloat("pointLight.quadratic", 0.032f);		
 		podloga_shader.setVec3("pointLight.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
-        podloga_shader.setVec3("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
-        podloga_shader.setVec3("pointLight.specular", 1.0f, 1.0f, 1.0f);
+		podloga_shader.setVec3("pointLight.diffuse", glm::vec3(0.5f, 0.5f, 0.5f));
+		podloga_shader.setVec3("pointLight.specular", 1.0f, 1.0f, 1.0f);
 		
 		//dirlight
 		podloga_shader.setVec3("dirLight.direction", glm::vec3(5.0f, 5.0f, 5.0f));
 		podloga_shader.setVec3("dirLight.ambient", glm::vec3(0.35f, 0.2f, 0.2f));
-        podloga_shader.setVec3("dirLight.diffuse", glm::vec3(0.1f, 0.1f, 0.3f));
-        podloga_shader.setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
+		podloga_shader.setVec3("dirLight.diffuse", glm::vec3(0.1f, 0.1f, 0.3f));
+		podloga_shader.setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
 		
 		//model spotlight
 		podloga_shader.setVec3("spotLight.position", 
 		glm::vec3(sijalica_pos.x, sijalica_pos.y + 0.5, sijalica_pos.z));
-        podloga_shader.setVec3("spotLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
-        podloga_shader.setVec3("spotLight.ambient", 0.4f, 0.3f, 0.5f);
-        podloga_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-        podloga_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-        podloga_shader.setFloat("spotLight.constant", 1.0f);
-        podloga_shader.setFloat("spotLight.linear", 0.09);
-        podloga_shader.setFloat("spotLight.quadratic", 0.032);
-        podloga_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(15.5f)));
-        podloga_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(23.5f)));     
+		podloga_shader.setVec3("spotLight.direction", glm::vec3(0.0f, -1.0f, 0.0f));
+		podloga_shader.setVec3("spotLight.ambient", 0.4f, 0.3f, 0.5f);
+		podloga_shader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+		podloga_shader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+		podloga_shader.setFloat("spotLight.constant", 1.0f);
+		podloga_shader.setFloat("spotLight.linear", 0.09);
+		podloga_shader.setFloat("spotLight.quadratic", 0.032);
+		podloga_shader.setFloat("spotLight.cutOff", glm::cos(glm::radians(15.5f)));
+		podloga_shader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(23.5f)));	 
 		
 		podloga_shader.setMat4("model", model);
 		podloga_shader.setMat4("projection", projection);
@@ -518,7 +518,7 @@ int main () {
 		
 		glBindTexture(GL_TEXTURE_2D, wojak_tex);
 		glBindVertexArray(VAO_pod);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		
 		//svetlo 
 		if(turn_on_off && glm::sin(currentFrame) * (bar > 0 ? 1 : -1) > bar) {
@@ -534,7 +534,7 @@ int main () {
 		}
 		
 		glfwSwapBuffers(w);
-        glfwPollEvents();
+		glfwPollEvents();
 	}
 	
 	glDeleteVertexArrays(1, &VAO);
@@ -549,17 +549,17 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 void process_input(GLFWwindow *window)
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
 
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        camera.ProcessKeyboard(LEFT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        camera.ProcessKeyboard(RIGHT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		camera.ProcessKeyboard(LEFT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 		
 	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
 		turn_on_off = !turn_on_off;
@@ -569,7 +569,7 @@ void process_input(GLFWwindow *window)
 
 int load_texture(std::string path) {
 	
-	stbi_set_flip_vertically_on_load(true);  
+	stbi_set_flip_vertically_on_load(true);	 
 	unsigned int tex;
 	glGenTextures(1, &tex);
 	glBindTexture(GL_TEXTURE_2D, tex);
@@ -599,23 +599,23 @@ int load_texture(std::string path) {
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    if (firstMouse) {
-        lastX = xpos;
-        lastY = ypos;
-        firstMouse = false;
-    }
+	if (firstMouse) {
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
 
-    lastX = xpos;
-    lastY = ypos;
+	lastX = xpos;
+	lastY = ypos;
 
-    camera.ProcessMouseMovement(xoffset, yoffset);
+	camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset){
-    camera.ProcessMouseScroll(yoffset);
+	camera.ProcessMouseScroll(yoffset);
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod) {
