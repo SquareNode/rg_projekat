@@ -6,4 +6,5 @@
 * Make
    * `make`
 
+### [Demo](demo.gif)
 
