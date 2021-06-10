@@ -6,5 +6,7 @@
 * Make
    * `make`
 
-### [Demo](demo.gif)
+### Demo
+
+![demo](demo.gif)
 
